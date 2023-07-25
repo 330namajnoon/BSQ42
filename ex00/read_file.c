@@ -101,18 +101,23 @@ int read_file(char *src)
 {
     int i;
     char *file_data;
+    char *base;
     char **table;
 
     file_data = get_file_data(src);
     if(!file_data)
         return (0);
+    base = get_base(file_data);
+    while (*file_data != '\n')
+        file_data++;
+    file_data++;
     table = generate_table(file_data, get_data_x_y(file_data, 'x'), get_data_x_y(file_data, 'y'));
     if(!table)
         return (0);
-
     i = -1;
-    if(!optimation(table,get_data_x_y(file_data, 'x') * get_data_x_y(file_data, 'y')))
+    if(!optimation(table,get_data_x_y(file_data, 'x') * get_data_x_y(file_data, 'y'), base))
         return (0);
+    free(base);
     free(file_data);
     while (table[++i])
         free(table[i]);

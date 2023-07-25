@@ -1,4 +1,4 @@
-program: main.c bsq.c read_file.c optimation.c
-	gcc -Wall -Wextra -Werror main.c bsq.c read_file.c optimation.c -o bsq
+program: main.c bsq.c read_file.c optimation.c extra.c
+	gcc -Wall -Wextra -Werror main.c bsq.c read_file.c optimation.c extra.c -o bsq
 
 fclear: rm bsq
