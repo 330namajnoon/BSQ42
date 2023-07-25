@@ -49,7 +49,7 @@ char **generate_table(char *str, int x, int y)
         if(str[i] == '\n')
         {
             j++;
-            k = -1;
+            k = -2;
         }
         data[j][++k] = str[i];
     }
@@ -111,7 +111,7 @@ int read_file(char *src)
         return (0);
 
     i = -1;
-    if(!optimation(table))
+    if(!optimation(table,get_data_x_y(file_data, 'x') * get_data_x_y(file_data, 'y')))
         return (0);
     free(file_data);
     while (table[++i])

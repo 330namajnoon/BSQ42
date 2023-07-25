@@ -15,6 +15,7 @@ struct Pos {
 
 int bsq(int arg_number, char **src);
 int read_file(char *src);
-int optimation(char **table);
+int optimation(char **table, int total);
+
 
 #endif
