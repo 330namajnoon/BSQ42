@@ -35,7 +35,7 @@ char **generate_table(char *str, int x, int y)
     if (!data)
         return (0);
     i = -1;
-    while (++i < y)
+    while (++i < y) 
     {
         data[i] = (char*)malloc((x + 1) * sizeof(char));
         if (!data[i])
@@ -112,8 +112,8 @@ int read_file(char *src)
         return (1);
     file_data = get_base(get_file_data(src), base, get_file_data_len(src));
     if(!file_data)
-        return (1);
-    if(!check_base(base))
+        return (2);
+    if(!check_base(base,file_data))
         return (2);
     table = generate_table(file_data, get_data_x_y(file_data, 'x'), get_data_x_y(file_data, 'y'));
     if(!table)

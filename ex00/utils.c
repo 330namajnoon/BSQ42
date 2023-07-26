@@ -31,6 +31,11 @@ char *get_base(char *file_data, char *base, int data_file_len)
     j = -1;
     k = -1;
     len = 1;
+    if(!check_table(file_data))
+    {
+        free(file_data);
+        return (0);
+    }
     if(file_data[0] == '0' || file_data[0] == '-')
         return (0);
 
@@ -53,9 +58,53 @@ char *get_base(char *file_data, char *base, int data_file_len)
     return (d);
 }
 
+int check_table(char *file_data)
+{
+    int t;
+    char base_n[11];
+    char base[11];
+    struct Vars vars;
+    (void)base;
+    vars.i = -1;
+    
+    t = 0;
+    if(file_data[0] == 0 || file_data[0] == '\n')
+        return (0);
+    while (file_data[(++vars.i) + 3] != '\n' )
+    {
+        if(!(file_data[vars.i] >= '0' && file_data[vars.i] <= '9'))
+            return (0);
+        base_n[vars.i] = file_data[vars.i];
+    }
+    vars.i = 0;
+    while (file_data[vars.i] != '\n')
+        vars.i++;
+    if(vars.i < 3)
+        return (0);
+    base_n[vars.i+1] = 0;
+    vars.i = -1;
+    vars.j = 0;
+    vars.k = 0;
+    while (file_data[++vars.i] != '\0')
+    {
+        if(file_data[vars.i] == '\n')
+        {
+            if(vars.j > 0 && t == 0)
+                t = vars.k;
+            else if(t > 0 && t != vars.k)
+                return (0);
+            vars.j++;
+            vars.k = 0;
+        }
+        vars.k++;
+    }
+    if (ft_atoi(base_n) != vars.j - 1)
+        return (0);
+    return 1;
+}
 
 
-int check_base(char *base)
+int check_base(char *base, char *file_data)
 {
     int i;
     int j;
@@ -74,6 +123,13 @@ int check_base(char *base)
                 return (0);
         }
     }
+    i = -1;
+    while (file_data[++i] != 0)
+    {
+        if(file_data[i] != base[0] && file_data[i] != base[1] && file_data[i] != base[2] && file_data[i] != '\n')
+            return (0);
+    }
+    
     return (1);
 }
 
