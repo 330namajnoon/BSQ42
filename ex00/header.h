@@ -13,10 +13,18 @@ struct Pos {
     int h;
 };
 
+struct Size
+{
+    int x;
+    int y;
+};
+
+
 int bsq(int arg_number, char **src);
 int read_file(char *src);
-int optimation(char **table, int x, int y);
-int get_base(char *file_data,char *base);
-
+int optimation(char **table, struct Size size,char *base);
+char *get_base(char *file_data,char *base,int data_file_len);
+int my_getchar();
+int check_base(char *base);
 
 #endif
