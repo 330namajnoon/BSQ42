@@ -9,7 +9,7 @@ int get_data_x_y(char *str, char c)
     res = 0;
     if (c == 'x')
     {
-        while (str[++i] != '\n')
+        while (str[++i] != '\n' && str[i] != 0)
             res++;
     }
     if (c == 'y')
