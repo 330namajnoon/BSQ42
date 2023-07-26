@@ -37,7 +37,7 @@ char **generate_table(char *str, int x, int y)
     i = -1;
     while (++i < y)
     {
-        data[i] = (char*)malloc(x * sizeof(char));
+        data[i] = (char*)malloc((x + 1) * sizeof(char));
         if (!data[i])
             return (0);
     }
@@ -48,10 +48,11 @@ char **generate_table(char *str, int x, int y)
     {
         if(str[i] == '\n')
         {
+            data[j][k+1] = 0;
             j++;
-            k = -2;
-        }
-        data[j][++k] = str[i];
+            k = -1;
+        }else
+            data[j][++k] = str[i];
     }
     return (data);  
 }
@@ -81,7 +82,7 @@ char *get_file_data(char *src)
     char *file_data;
     int i;
 
-    file_data = (char*)malloc(get_file_data_len(src) * sizeof(char));
+    file_data = (char*)malloc((get_file_data_len(src) + 1) * sizeof(char));
     if(!file_data)
         return (0);
 
@@ -94,6 +95,8 @@ char *get_file_data(char *src)
         if(c != '\0')
             file_data[++i] = c;
     }
+    file_data[i+1] = '\0';
+    close(file);
     return (file_data);
 }
 
@@ -102,20 +105,21 @@ int read_file(char *src)
     int i;
     char *file_data;
     char **table;
+    //char base[4];
 
     file_data = get_file_data(src);
     if(!file_data)
         return (0);
+    
     table = generate_table(file_data, get_data_x_y(file_data, 'x'), get_data_x_y(file_data, 'y'));
     if(!table)
         return (0);
-
-    i = -1;
-    if(!optimation(table,get_data_x_y(file_data, 'x') * get_data_x_y(file_data, 'y')))
+    if(!optimation(table,get_data_x_y(file_data, 'x'),get_data_x_y(file_data, 'y')))
         return (0);
-    free(file_data);
-    while (table[++i])
+    i = -1;
+    while (++i < get_data_x_y(file_data, 'y'))
         free(table[i]);
     free(table);
+    free(file_data);
     return (1);
 }
